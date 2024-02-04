@@ -1,0 +1,60 @@
+.popUpForm {
+  width: 100vw;
+  height: 100dvh;
+
+  background: rgba(0, 0, 0, .4);
+  position: fixed;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  form {
+    width: fit-content;
+    height: fit-content;
+
+    display: flex;
+    flex-direction: column;
+    background: #171717;
+    -webkit-border-radius: 1rem;
+    -moz-border-radius: 1rem;
+    border-radius: 1rem;
+    box-shadow: 0 0 1vh rgba(23, 23, 23, 0.5);
+
+    padding: 2rem 4rem;
+
+    h2 {
+      color: #FFFFFF;
+      font-weight: 800;
+
+      margin-bottom: .5rem;
+    }
+
+    button {
+      width: 100%;
+      height: fit-content;
+
+      background: #e74c3c;
+      -webkit-border-radius: .5rem;
+      -moz-border-radius: .5rem;
+      border-radius: .5rem;
+      border: none;
+      outline: none;
+      transition: 150ms;
+
+      color: #FFFFFF;
+      font-size: 1.2rem;
+      font-weight: 600;
+      font-family: 'Montserrat', 'sans-serif';
+
+      padding: .5rem 0;
+
+      margin-top: 1rem;
+
+      &:hover {
+        cursor: pointer;
+        background: #a8362a;
+      }
+    }
+  }
+}

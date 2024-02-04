@@ -1,19 +1,21 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './index.css';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import Home from "./components/Home/Home";
-import Registration from "./components/Registration/Registration";
 
 function App() {
+  const [showRegisterForm, setShowRegisterForm] = useState<boolean>(false);
+  const [showLoginForm, setShowLoginForm] = useState<boolean>(false);
+
   return (
-    <div className="App">
+    <>
       <Router>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/register" element={<Registration />} />
+          <Route path="/" element={<Home showRegisterForm={showRegisterForm} showLoginForm={showLoginForm}
+                                         setShowLoginForm={setShowLoginForm} setShowRegisterForm={setShowRegisterForm}/>}/>
         </Routes>
       </Router>
-    </div>
+    </>
   );
 }
 

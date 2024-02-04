@@ -1,5 +1,5 @@
-server/node_modules
+.idea/
+server/node_modules/
 server/package-lock.json
-client/node_modules
+client/node_modules/
 client/package-lock.json
-./.idea/
