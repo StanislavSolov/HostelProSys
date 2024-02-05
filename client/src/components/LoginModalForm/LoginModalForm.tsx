@@ -4,15 +4,17 @@ import '../UIComponents/popUpForm.scss';
 import CustomInput from "../UIComponents/CustomInput/CustomInput";
 import axios from "axios";
 import User from "../../classes/User";
+import TypeUser from "../../types/TypeUser";
 
 interface LoginModalFormProps {
   showLoginModalForm: boolean,
   setShowLoginModalForm: React.Dispatch<React.SetStateAction<boolean>>,
+  setUser: React.Dispatch<React.SetStateAction<TypeUser | null>>,
 }
 
 type TypeErrorLoginForm = { login: boolean, password: boolean }
 
-const LoginModalForm: FC<LoginModalFormProps> = ({showLoginModalForm, setShowLoginModalForm}) => {
+const LoginModalForm: FC<LoginModalFormProps> = ({showLoginModalForm, setUser, setShowLoginModalForm}) => {
   const [loginFormData, setLoginFormData] = useState<{ login: string, password: string }>({
     login: '',
     password: '',
@@ -91,8 +93,12 @@ const LoginModalForm: FC<LoginModalFormProps> = ({showLoginModalForm, setShowLog
 
 
         if (response.status === 200) {
-          console.log(response.data)
           const user = new User(loginFormData.login, response.data.email, response.data.isAdmin);
+          setUser({
+            login: loginFormData.login,
+            email: response.data.email,
+            isAdmin: response.data.isAdmin,
+          });
           setShowLoginModalForm(false);
           clearForm();
         }

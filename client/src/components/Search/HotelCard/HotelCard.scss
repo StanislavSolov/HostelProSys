@@ -1,0 +1,88 @@
+.hotel-card {
+  width: 25rem;
+  height: 15rem;
+
+  background: url("../../../img/hotel-inside.jpg") no-repeat;
+  -webkit-background-size: cover;
+  background-size: cover;
+  position: relative;
+
+  color: #081F32;
+  font-weight: 600;
+  font-size: 1rem;
+
+  &__info {
+    background: rgba(226, 226, 226, 0.4);
+    backdrop-filter: blur(1rem);
+    position: absolute;
+    -webkit-border-radius: .5rem;
+    -moz-border-radius: .5rem;
+    border-radius: .5rem;
+
+    padding: .75rem 1.5rem;
+
+    left: 0;
+    bottom: 0;
+  }
+
+  &__title  {
+    display: flex;
+    gap: .5rem;
+    align-items: flex-end;
+
+    h4 {
+      font-weight: 400;
+    }
+
+    h6 {
+      font-size: .8rem;
+      font-weight: 600;
+    }
+  }
+
+  button {
+    width: fit-content;
+    height: fit-content;
+
+    background: #1B75BB;
+    border: none;
+    outline: none;
+    -webkit-border-radius: .3rem;
+    -moz-border-radius: .3rem;
+    border-radius: .3rem;
+    transition: 150ms;
+
+    color: #FFFFFF;
+    font-family: 'Montserrat', 'sans-serif';
+    font-size: .8rem;
+    font-weight: 600;
+
+    padding: .5rem 1rem;
+
+    margin-top: .5rem;
+
+    &:hover {
+      cursor: pointer;
+      background: #14568a;
+    }
+  }
+
+  &__more {
+    width: fit-content;
+    height: fit-content;
+
+    position: absolute;
+
+    right: 0;
+    top: 0;
+
+    svg  {
+      width: auto;
+      height: 3rem;
+    }
+    
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

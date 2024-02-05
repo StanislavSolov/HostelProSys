@@ -7,12 +7,17 @@ import LoginModalForm from "../LoginModalForm/LoginModalForm";
 import RegisterModalForm from "../RegisterModalForm/RegisterModalForm";
 import roomTypes from "../../const/roomTypes";
 import axios from "axios";
+import {useNavigate} from "react-router";
+import TypeUser from "../../types/TypeUser";
 
 interface HomeProps {
   showRegisterForm: boolean,
   showLoginForm: boolean,
   setShowLoginForm: React.Dispatch<React.SetStateAction<boolean>>,
   setShowRegisterForm: React.Dispatch<React.SetStateAction<boolean>>,
+  setSearchData: React.Dispatch<React.SetStateAction<any>>,
+  user: TypeUser | null,
+  setUser: React.Dispatch<React.SetStateAction<TypeUser | null>>,
 }
 
 type TypeHomeData = {
@@ -20,7 +25,15 @@ type TypeHomeData = {
   roomTypes: string[],
 }
 
-const Home: FC<HomeProps> = ({setShowRegisterForm, showLoginForm, showRegisterForm, setShowLoginForm}) => {
+const Home: FC<HomeProps> = ({
+                               setShowRegisterForm,
+                               setSearchData,
+                               showLoginForm,
+                               showRegisterForm,
+                               setShowLoginForm,
+                               user,
+                               setUser
+                             }) => {
   const [homeData, setHomeData] = useState<TypeHomeData>({
     cities: [
       'Київ',
@@ -31,16 +44,22 @@ const Home: FC<HomeProps> = ({setShowRegisterForm, showLoginForm, showRegisterFo
     roomTypes: roomTypes,
   });
 
+  const navigate = useNavigate();
 
   const onSubmitSearchForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
     const searchParams = new URLSearchParams(formData as any).toString();
+    navigate('/search/');
 
     try {
       const response = await axios.get(`http://localhost:5000/api/v1/search?${searchParams}`);
-      console.log(response.data);
+      setSearchData({
+        rooms: response.data.result,
+        checkInDate: response.data.checkInDate,
+        checkOutDate: response.data.checkOutDate,
+      });
     } catch (error) {
       console.error('Error during search: ', error);
     }
@@ -50,17 +69,19 @@ const Home: FC<HomeProps> = ({setShowRegisterForm, showLoginForm, showRegisterFo
   return (
     <header id="Home">
       {
-        showLoginForm &&  <LoginModalForm setShowLoginModalForm={setShowLoginForm} showLoginModalForm={showLoginForm} />
+        showLoginForm && <LoginModalForm setUser={setUser} setShowLoginModalForm={setShowLoginForm} showLoginModalForm={showLoginForm}/>
       }
       {
-        showRegisterForm && <RegisterModalForm setShowRegisterModalForm={setShowRegisterForm} showRegisterModalForm={showRegisterForm} />
+        showRegisterForm &&
+        <RegisterModalForm setUser={setUser} setShowRegisterModalForm={setShowRegisterForm} showRegisterModalForm={showRegisterForm}/>
       }
       <div className="home">
-        <NavBar setShowLoginForm={setShowLoginForm}
+        <NavBar user={user} setShowLoginForm={setShowLoginForm}
                 setShowRegisterForm={setShowRegisterForm}/>
         <div className="home__info">
           <h1>Залишайтеся з нами, почувайтеся <br/>як <strong>вдома</strong>.</h1>
-          <h4>Готелі, де дозволено проживання з домашніми тваринами, стають все більш популярними; привабливий для мандрівників, які не можуть винести розлуки.</h4>
+          <h4>Готелі, де дозволено проживання з домашніми тваринами, стають все більш популярними; привабливий для
+            мандрівників, які не можуть винести розлуки.</h4>
           <button>Забронювати</button>
         </div>
         <form onSubmit={onSubmitSearchForm} method="GET">

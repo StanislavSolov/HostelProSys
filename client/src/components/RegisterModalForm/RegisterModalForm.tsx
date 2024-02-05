@@ -5,10 +5,12 @@ import CustomInput from "../UIComponents/CustomInput/CustomInput";
 import TypeRegisterFormData from "../../types/TypeRegisterFormData";
 import axios from "axios";
 import User from "../../classes/User";
+import TypeUser from "../../types/TypeUser";
 
 interface RegisterModalFormProps {
   showRegisterModalForm: boolean,
   setShowRegisterModalForm: React.Dispatch<React.SetStateAction<boolean>>,
+  setUser: React.Dispatch<React.SetStateAction<TypeUser | null>>,
 }
 
 type TypeErrorRegisterForm = {
@@ -18,7 +20,7 @@ type TypeErrorRegisterForm = {
   password2: boolean,
 }
 
-const RegisterModalForm: FC<RegisterModalFormProps> = ({setShowRegisterModalForm, showRegisterModalForm}) => {
+const RegisterModalForm: FC<RegisterModalFormProps> = ({setShowRegisterModalForm,  setUser, showRegisterModalForm}) => {
   const [registerFormData, setRegisterFormData] = useState<TypeRegisterFormData>({
     login: '',
     email: '',
@@ -137,6 +139,11 @@ const RegisterModalForm: FC<RegisterModalFormProps> = ({setShowRegisterModalForm
         const user = new User(registerFormData.login, registerFormData.email, false);
 
         if (response.status === 200) {
+          setUser({
+            login: registerFormData.login,
+            email: registerFormData.email,
+            isAdmin: false,
+          });
           setShowRegisterModalForm(false);
           clearForm();
         }
